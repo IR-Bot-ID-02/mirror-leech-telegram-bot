@@ -233,7 +233,11 @@ def get_media_streams(path):
     is_audio = False
 
     mime_type = get_mime_type(path)
-    if not mime_type.startswith(('video', 'audio')):
+    if mime_type.startswith('audio'):
+        is_audio = True
+        return is_video, is_audio
+
+    if not mime_type.startswith('video'):
         return is_video, is_audio
 
     try:
@@ -253,5 +257,6 @@ def get_media_streams(path):
             is_video = True
         elif stream.get('codec_type') == 'audio':
             is_audio = True
+
     return is_video, is_audio
 
